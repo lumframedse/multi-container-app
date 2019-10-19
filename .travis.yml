@@ -11,22 +11,22 @@ cache:
     - server/node_modules
     - worker/node_modules
 before_install:
-  - docker build -t lagaj/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t lumframedse/react-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run lagaj/react-test npm test -- --watchAll=false
+  - docker run lumframedse/react-test npm test -- --watchAll=false
 
 after_success:
-  - docker build -t lagaj/multi-client ./client
-  - docker build -t lagaj/multi-worker ./worker
-  - docker build -t lagaj/multi-server ./server
-  - docker build -t lagaj/multi-nginx ./nginx
+  - docker build -t lumframedse/multi-client ./client
+  - docker build -t lumframedse/multi-worker ./worker
+  - docker build -t lumframedse/multi-server ./server
+  - docker build -t lumframedse/multi-nginx ./nginx
   # Login to the docker
   - echo ${DOCKER_PASSWRD} | docker login -u "$DOCKER_ID" --password-stdin
   # Take all the built images and push to docker hub
-  - docker push lagaj/multi-client
-  - docker push lagaj/multi-worker
-  - docker push lagaj/multi-server
-  - docker push lagaj/multi-nginx 
+  - docker push lumframedse/multi-client
+  - docker push lumframedse/multi-worker
+  - docker push lumframedse/multi-server
+  - docker push lumframedse/multi-nginx 
 
 
 
