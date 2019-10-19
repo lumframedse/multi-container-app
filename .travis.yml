@@ -21,7 +21,7 @@ after_success:
   - docker build -t lumframedse/multi-server ./server
   - docker build -t lumframedse/multi-nginx ./nginx
   # Login to the docker
-  - echo ${DOCKER_PASSWRD} | docker login -u "$DOCKER_ID" --password-stdin
+  - echo ${DOCKER_PASSWORD} | docker login -u "$DOCKER_ID" --password-stdin
   # Take all the built images and push to docker hub
   - docker push lumframedse/multi-client
   - docker push lumframedse/multi-worker
