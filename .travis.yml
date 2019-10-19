@@ -1,0 +1,32 @@
+sudo: require
+language: node_js
+node_js:
+  - 10.16.3
+dist: trusty
+services:
+  - docker
+cache:
+  directories:
+    - client/node_modules
+    - server/node_modules
+    - worker/node_modules
+before_install:
+  - docker build -t lagaj/react-test -f ./client/Dockerfile.dev ./client
+script:
+  - docker run lagaj/react-test npm test -- --watchAll=false
+
+after_success:
+  - docker build -t lagaj/multi-client ./client
+  - docker build -t lagaj/multi-worker ./worker
+  - docker build -t lagaj/multi-server ./server
+  - docker build -t lagaj/multi-nginx ./nginx
+  # Login to the docker
+  - echo ${DOCKER_PASSWRD} | docker login -u "$DOCKER_ID" --password-stdin
+  # Take all the built images and push to docker hub
+  - docker push lagaj/multi-client
+  - docker push lagaj/multi-worker
+  - docker push lagaj/multi-server
+  - docker push lagaj/multi-nginx 
+
+
+
