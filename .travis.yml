@@ -28,5 +28,19 @@ after_success:
   - docker push lumframedse/multi-server
   - docker push lumframedse/multi-nginx 
 
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: MultiDocker-env
+  bukcket_name: elasticbeanstalk-us-east-1-061076186936
+  bucket_path: multi-docker
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key:
+    secure: $AWS_SECRET_ACCESS_KEY
+
+
 
 
